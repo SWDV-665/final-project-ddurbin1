@@ -1,0 +1,7 @@
+{
+  "name": "MovieArchive",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
