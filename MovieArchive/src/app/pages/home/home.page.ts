@@ -1,56 +1,102 @@
 import { Component } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-
 @Component({
   selector: "app-home",
-  templateUrl: "./home.page.html",
-  styleUrls: ["./home.page.scss"]
+  templateUrl: "home.page.html",
+  styleUrls: ["home.page.scss"]
 })
-
 export class HomePage {
   constructor(private formBuilder: FormBuilder) {}
-  get actor() {
-    return this.registrationForm.get("actor");
+  get name() {
+    return this.registrationForm.get("name");
   }
-  get director() {
-    return this.registrationForm.get('director');
+  get email() {
+    return this.registrationForm.get('email');
   }
-  get genre() {
-    return this.registrationForm.get('genre');
+  get phone() {
+    return this.registrationForm.get('phone');
   }
-  get year() {
-    return this.registrationForm.get('year');
+  get street() {
+    return this.registrationForm.get('address.street');
   }
-  
+  get city() {
+    return this.registrationForm.get('address.city');
+  }
+  get state() {
+    return this.registrationForm.get('address.state');
+  }
+  get zip() {
+    return this.registrationForm.get('address.zip');
+  }
   public errorMessages = {
-    actor: [
+    name: [
       { type: 'required', message: 'Name is required' },
       { type: 'maxlength', message: 'Name cant be longer than 100 characters' }
     ],
-	director: [
-      { type: 'required', message: 'Name is required' },
-      { type: 'pattern', message: 'Name cant be longer than 100 characters' }
-    ],
-    genre: [
+    email: [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid genre type' }
+      { type: 'pattern', message: 'Please enter a valid email address' }
+    ],
+    phone: [
+      { type: 'required', message: 'Phone number is required' },
+      { type: 'pattern', message: 'Please enter a valid phone number' }
     ],
     street: [
-      { type: 'required', message: 'Premiere year is required' },
-      { type: 'maxlength', message: 'Can not be less then or greater then four digits' }
+      { type: 'required', message: 'Street name is required' },
+      {
+        type: 'maxlength',
+        message: 'Street name cant be longer than 100 characters'
+      }
     ],
-    
+    city: [
+      { type: 'required', message: 'City name is required' },
+      {
+        type: 'maxlength',
+        message: 'City name cant be longer than 100 characters'
+      }
+    ],
+    state: [
+      { type: 'required', message: 'State is required' },
+      {
+        type: 'maxlength',
+        message: 'State cant be longer than 100 characters'
+      }
+    ],
+    zip: [
+      { type: 'required', message: 'Zip code is required' },
+      {
+        type: 'pattern',
+        message: 'Please enter a valid zip code'
+      }
+    ]
   };
   registrationForm = this.formBuilder.group({
-    actor: ['', [Validators.required, Validators.maxLength(100)]],
-	director: ['', [Validators.required, Validators.maxLength(100)]],
-    genre: ['', [Validators.required, Validators.maxLength(100)]],
-	year: ['', [Validators.required, Validators.maxLength(4)]]
-    
+    name: ['', [Validators.required, Validators.maxLength(100)]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$')
+      ]
+    ],
+    phone: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$')
+      ]
+    ],
+    address: this.formBuilder.group({
+      street: ['', [Validators.required, Validators.maxLength(100)]],
+      city: ['', [Validators.required, Validators.maxLength(100)]],
+      state: ['', [Validators.required, Validators.maxLength(100)]],
+      zip: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]
+      ]
+    })
   });
   public submit() {
     console.log(this.registrationForm.value);
   }
-
- 
 }
