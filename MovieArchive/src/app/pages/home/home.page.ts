@@ -29,13 +29,13 @@ export class HomePage {
       { type: 'required', message: 'Director is required' },
       { type: 'maxlength', message: 'Director cant be longer than 50 characters' }
     ],
-	year: [
-      { type: 'required', message: 'Year is required' },
-      { type: 'maxlength', message: 'Year cant be longer than 50 characters' }
-    ],
-    genre: [
+	genre: [
       { type: 'required', message: 'Genre is required' },
-      { type: 'maxlength', message: 'Genre cant be longer than 4 digits' }
+      { type: 'maxlength', message: 'Genre cant be longer than 50 characters' }
+    ],
+    year: [
+      { type: 'required', message: 'Year is required' },
+      { type: 'maxlength', message: 'Year cant be longer than 4 digits' }
     ]
   };
   registrationForm = this.formBuilder.group({
