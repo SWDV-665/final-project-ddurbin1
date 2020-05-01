@@ -7,6 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/navtab/navtab.module').then( m => m.NavtabPageModule)
   },
   
+  
 ];
 
 @NgModule({

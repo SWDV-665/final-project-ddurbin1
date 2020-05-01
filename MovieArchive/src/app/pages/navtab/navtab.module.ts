@@ -23,6 +23,10 @@ const routes: Routes = [
 		{
 			path: 'support',
 			loadChildren: () => import('../support/support.module').then( m => m.SupportPageModule)
+		},
+		{
+			path: 'home/:id',
+			loadChildren: () => import('../movie-details/movie-details.module').then(m => m.MovieDetailsPageModule)
 		}
 	]
 	},

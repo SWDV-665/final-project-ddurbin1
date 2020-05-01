@@ -1,15 +1,15 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Home
-        </ion-title>
+    <ion-toolbar color="primary">
+        <ion-title>Movie Archvie</ion-title>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
+
     <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchChanged($event)"></ion-searchbar>
 
     <ion-item>
-        <ion-label>Select Searchtype</ion-label>
+        <ion-label>Select search type</ion-label>
         <ion-select [(ngModel)]="type" (ionChange)="searchChanged($event)">
             <ion-select-option value="">All</ion-select-option>
             <ion-select-option value="movie">Movie</ion-select-option>
@@ -20,7 +20,7 @@
 
     <ion-list>
 
-        <ion-item button *ngFor="let item of (results | async)" [routerLink]="['/', 'movies', item.imdbID]">
+        <ion-item button *ngFor="let item of (results | async)" [routerLink]="['/', 'home', item.imdbID]">
             <ion-avatar slot="start">
                 <img [src]="item.Poster" *ngIf="item.Poster != 'N/A'">
             </ion-avatar>
@@ -37,4 +37,5 @@
         </ion-item>
 
     </ion-list>
+
 </ion-content>
