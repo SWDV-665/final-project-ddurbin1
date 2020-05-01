@@ -6,52 +6,35 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div class="ion-padding">
-        <form [formGroup]="registrationForm" (ngSubmit)="submit()">
-            <ion-list>
-                <ion-item>
-                    <ion-label position="floating">Actor</ion-label>
-                    <ion-input inputmode="tel" formControlName="actor"></ion-input>
-                </ion-item>
-                <div *ngFor="let error of errorMessages.actor">
-                    <ng-container *ngIf="actor.hasError(error.type) && (actor.dirty || actor.touched)">
-                        <small class="error-message">{{error.message}}</small>
-                    </ng-container>
-                </div>
-                <ion-item>
-                    <ion-label position="floating">Director</ion-label>
-                    <ion-input inputmode="director" formControlName="director"></ion-input>
-                </ion-item>
-                <div *ngFor="let error of errorMessages.director">
-                    <ng-container *ngIf="director.hasError(error.type) && (director.dirty || director.touched)">
-                        <small class="error-message">{{error.message}}</small>
-                    </ng-container>
-                </div>
-                <ion-item>
-                    <ion-label position="floating">Genre</ion-label>
-                    <ion-input inputmode="genre" formControlName="genre"></ion-input>
-                </ion-item>
-                <div *ngFor="let error of errorMessages.genre">
-                    <ng-container *ngIf="genre.hasError(error.type) && (genre.dirty || genre.touched)">
-                        <small class="error-message">{{error.message}}</small>
-                    </ng-container>
-                </div>
-                <ion-item>
-                    <ion-label position="floating">Year</ion-label>
-                    <ion-input inputmode="year" formControlName="year"></ion-input>
-                </ion-item>
-                <div *ngFor="let error of errorMessages.year">
-                    <ng-container *ngIf="year.hasError(error.type) && (year.dirty || year.touched)">
-                        <small class="error-message">{{error.message}}</small>
-                    </ng-container>
-                </div>
-            </ion-list>
-           
-            <ion-button [disabled]="!registrationForm.valid" type="submit" expand="block">
-                Submit <ion-icon slot="end"
-                                 name="create">
-                </ion-icon>
-            </ion-button>
-        </form>
-    </div>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchChanged($event)"></ion-searchbar>
+
+    <ion-item>
+        <ion-label>Select Searchtype</ion-label>
+        <ion-select [(ngModel)]="type" (ionChange)="searchChanged($event)">
+            <ion-select-option value="">All</ion-select-option>
+            <ion-select-option value="movie">Movie</ion-select-option>
+            <ion-select-option value="series">Series</ion-select-option>
+            <ion-select-option value="episode">Episode</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-list>
+
+        <ion-item button *ngFor="let item of (results | async)" [routerLink]="['/', 'movies', item.imdbID]">
+            <ion-avatar slot="start">
+                <img [src]="item.Poster" *ngIf="item.Poster != 'N/A'">
+            </ion-avatar>
+
+            <ion-label text-wrap>
+                <h3>{{ item.Title }}</h3>
+                {{ item.Year }}
+            </ion-label>
+
+            <ion-icon slot="end" *ngIf="item.Type == 'movie'" name="videocam"></ion-icon>
+            <ion-icon slot="end" *ngIf="item.Type == 'series'" name="tv"></ion-icon>
+            <ion-icon slot="end" *ngIf="item.Type == 'game'" name="logo-game-controller-b"></ion-icon>
+
+        </ion-item>
+
+    </ion-list>
 </ion-content>
